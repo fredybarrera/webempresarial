@@ -14,7 +14,7 @@ class Category(models.Model):
         # Se ordena por el campo "created" del mas nuevo al mas antiguo.
         ordering = ['-created']
 
-    # Permite definir el nombre que se muestra en el panel de adminitración.
+    # Permite definir el nombre que se muestra en el panel de administración.
     def __str__(self):
         return self.name
 
@@ -29,7 +29,8 @@ class Post(models.Model):
     # Campo relacionado del modelo User (gestionado por django), si se elimina un usuario, se elimina por cascada sus post realizados.
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Autor")
     # Campo de relacion de muchos a muchos, le paso como primer parámetro el modelo "Category"
-    categories = models.ManyToManyField(Category, verbose_name="Categoría")
+    # El tercer parámetro (related_name) es el nombre para acceder a los post desde una categoría.
+    categories = models.ManyToManyField(Category, verbose_name="Categoría", related_name="get_posts")
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de creación")
     updated = models.DateTimeField(auto_now=True, verbose_name="Fecha de actualización")
 
